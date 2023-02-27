@@ -1,0 +1,26 @@
+:host {
+  display: block;
+  z-index: 3.5;
+}
+h1{
+  font-family: 'Times New Roman', serif;
+  font-size: 2em;
+}
+span{
+  font-family: 'Times New Roman', serif;
+}
+mat-toolbar {
+  display: flex;
+  justify-content: space-between;
+
+  .user-info {
+    display: flex;
+    align-items: center;
+    span {
+      margin-right: 0.5rem;
+    }
+    mat-icon {
+      transform: scale(1.4);
+    }
+  }
+}
