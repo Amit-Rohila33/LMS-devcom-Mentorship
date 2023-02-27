@@ -3,7 +3,7 @@ The main objective of this project is to manage the details of the students, boo
 
 ### For admin <br>
 #### 1). Admin can add new books <br>
- - `POST`  http://localhost/port/api/book/<br>
+ - `POST`  http://localhost:port/api/books/<br>
  - **BODY PARAMS** : <br>
 ```python  
     {
@@ -46,7 +46,7 @@ The main objective of this project is to manage the details of the students, boo
 
 
 #### 4). Issue a book to a student <br>
- - `PUT`  http://localhost:port/api/book/{book-slug}/<br>
+ - `PUT`  http://localhost:port/api/books/{book-slug}/<br>
  - **BODY PARAMS** : <br>
  ```python 
  {"issued_to" : StudentId} 
@@ -62,7 +62,7 @@ The main objective of this project is to manage the details of the students, boo
 ### For students <br>
 #### 1). A student can see his/her profile <br>
 
- - `GET`  http://localhost/port/api/student/<br>
+ - `GET`  http://localhost:port/api/student/<br>
  - **HEADERS** : Authorization : "Token *Token*"<br>
 
 #### 2). Edit their profile <br>
