@@ -22,7 +22,7 @@ export class ManageCategoriesComponent {
     let c = this.Category.value;
     let s = this.Subcategory.value;
 
-    this.api.insertCategory(c, s).subscribe({
+    this.api.insertCategory(c).subscribe({
       next: (res: any) => {
         this.msg = res.toString();
         setInterval(() => (this.msg = ''), 5000);

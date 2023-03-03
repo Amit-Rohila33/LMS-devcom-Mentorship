@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Book, CategoryBooks } from '../models/models';
+import { Book, GenreBooks, Genre } from '../models/models';
 import { ApiService } from '../services/api.service';
 
 @Component({
@@ -9,12 +9,11 @@ import { ApiService } from '../services/api.service';
 })
 export class LibraryComponent implements OnInit {
   availableBooks: Book[] = [];
-  booksToDisplay: CategoryBooks[] = [];
+  booksToDisplay: GenreBooks[] = [];
   displayedColumns: string[] = [
     'id',
     'title',
     'author',
-    'price',
     'available',
     'order',
   ];
@@ -22,6 +21,7 @@ export class LibraryComponent implements OnInit {
   constructor(private api: ApiService) {}
 
   ngOnInit(): void {
+//This is used to get the data of books from backend. Initially array of Book is defined as empty and then using a for loop, the array is filled.
     this.api.getAllBooks().subscribe({
       next: (res: Book[]) => {
         this.availableBooks = [];
@@ -32,56 +32,53 @@ export class LibraryComponent implements OnInit {
       error: (err: any) => console.log(err),
     });
   }
-
+//This function uses the data from backend and displays it on the frontend
   updateList() {
     this.booksToDisplay = [];
     for (let book of this.availableBooks) {
       let exist = false;
-      for (let categoryBooks of this.booksToDisplay) {
+      for (let genreBooks of this.booksToDisplay) {
         if (
-          book.category === categoryBooks.category &&
-          book.subCategory === categoryBooks.subCategory
+          book.genre === genreBooks.genre 
         )
           exist = true;
       }
 
       if (exist) {
-        for (let categoryBooks of this.booksToDisplay) {
+        for (let genreBooks of this.booksToDisplay) {
           if (
-            book.category === categoryBooks.category &&
-            book.subCategory === categoryBooks.subCategory
+            book.genre === genreBooks.genre 
           )
-            categoryBooks.books.push(book);
+            genreBooks.books.push(book);
         }
       } else {
         this.booksToDisplay.push({
-          category: book.category,
-          subCategory: book.subCategory,
+          genre: book.genre,
           books: [book],
         });
       }
     }
   }
-
+//This function is used to count the number of books.
   getBookCount() {
     return this.booksToDisplay.reduce((pv, cv) => cv.books.length + pv, 0);
   }
-
+//This function is used to search a book using it's title or author name.
   search(value: string) {
     value = value.toLowerCase();
     this.updateList();
     if (value.length > 0) {
-      this.booksToDisplay = this.booksToDisplay.filter((categoryBooks) => {
-        categoryBooks.books = categoryBooks.books.filter(
+      this.booksToDisplay = this.booksToDisplay.filter((genreBooks) => {
+        genreBooks.books = genreBooks.books.filter(
           (book) =>
             book.title.toLowerCase().includes(value) ||
             book.author.toLowerCase().includes(value)
         );
-        return categoryBooks.books.length > 0;
+        return genreBooks.books.length > 0;
       });
     }
   }
-
+//This function enables a user to order a book.
   orderBook(book: Book) {
     let userid = this.api.getTokenUserInfo()?.id ?? 0;
     this.api.orderBook(userid, book.id).subscribe({
@@ -92,10 +89,5 @@ export class LibraryComponent implements OnInit {
       },
       error: (err: any) => console.log(err),
     });
-  }
-
-  isBlocked() {
-    let blocked = this.api.getTokenUserInfo()?.blocked ?? true;
-    return blocked;
   }
 }

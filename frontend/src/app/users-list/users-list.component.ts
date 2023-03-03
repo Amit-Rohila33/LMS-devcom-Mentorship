@@ -24,6 +24,7 @@ export class UsersListComponent implements OnInit {
   constructor(private api: ApiService) {}
 
   ngOnInit(): void {
+    //API used to get data regarding all users from backend
     this.api.getAllUsers().subscribe({
       next: (res: User[]) => {
         this.users = [];
@@ -31,41 +32,5 @@ export class UsersListComponent implements OnInit {
       },
       error: (err: any) => console.log(err),
     });
-  }
-
-  blockUser(user: User) {
-    if (user.blocked) {
-      this.api.unblockUser(user.id).subscribe({
-        next: (res: any) => {
-          if (res === 'success') user.blocked = false;
-        },
-        error: (err: any) => console.log(err),
-      });
-    } else {
-      this.api.blockUser(user.id).subscribe({
-        next: (res: any) => {
-          if (res === 'success') user.blocked = true;
-        },
-        error: (err: any) => console.log(err),
-      });
-    }
-  }
-
-  enableUser(user: User) {
-    if (user.active) {
-      this.api.disableUser(user.id).subscribe({
-        next: (res: any) => {
-          if (res === 'success') user.active = false;
-        },
-        error: (err: any) => console.log(err),
-      });
-    } else {
-      this.api.enableUser(user.id).subscribe({
-        next: (res: any) => {
-          if (res === 'success') user.active = true;
-        },
-        error: (err: any) => console.log(err),
-      });
-    }
   }
 }

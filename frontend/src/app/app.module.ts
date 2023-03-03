@@ -22,6 +22,8 @@ import { BookCategoriesComponent } from './book-categories/book-categories.compo
 import { ManageCategoriesComponent } from './manage-categories/manage-categories.component';
 import { ProfileComponent } from './profile/profile.component';
 import { HomeComponent } from './home/home.component';
+import { GenreComponent } from './genre/genre.component';
+import { ManageGenreComponent } from './manage-genre/manage-genre.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +41,9 @@ import { HomeComponent } from './home/home.component';
     BookCategoriesComponent,
     ManageCategoriesComponent,
     ProfileComponent,
-    HomeComponent
+    HomeComponent,
+    GenreComponent,
+    ManageGenreComponent
   ],
   imports: [
     BrowserModule,

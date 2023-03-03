@@ -17,11 +17,11 @@ export class OrdersComponent implements OnInit {
     'bookid',
     'book',
     'date',
-    'returned',
+    'status',
   ];
 
   constructor(private api: ApiService) {}
-
+//The data of all the orders is being pulled using this function
   ngOnInit(): void {
     this.api.getAllOrders().subscribe({
       next: (res: Order[]) => {
@@ -31,17 +31,17 @@ export class OrdersComponent implements OnInit {
       error: (err: any) => console.log(err),
     });
   }
-
+//Function used to filter books according to their Return Status
   filter(value: string) {
     if (value === 'all') {
       this.ordersToDisplay = this.listOfOrders.filter((value) => value);
     } else if (value === 'pen') {
       this.ordersToDisplay = this.listOfOrders.filter(
-        (value) => value.returned == false
+        (value) => value.status == "Ordered"
       );
     } else {
       this.ordersToDisplay = this.listOfOrders.filter(
-        (value) => value.returned
+        (value) => value.status == "Returned"
       );
     }
   }

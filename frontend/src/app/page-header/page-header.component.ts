@@ -10,6 +10,7 @@ export class PageHeaderComponent {
   @Output() menuClicked = new EventEmitter<boolean>();
   constructor(public api: ApiService) {}
 
+  //Function to logout
   logOut() {
     this.api.deleteToken();
   }

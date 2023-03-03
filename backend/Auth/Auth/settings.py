@@ -154,3 +154,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
 AUTH_USER_MODEL = 'authentication.Student'
+
+
+#Enabling timezone
+USE_TZ = True

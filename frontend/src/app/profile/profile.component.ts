@@ -19,25 +19,10 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit() {
     let user = this.api.getTokenUserInfo();
-
+// Data is being pulled here to display to the user
     this.dataSource = [
       { name: 'Name', value: user?.name},
       { name: 'Email', value: user?.email ?? '' },
-      { name: 'Mobile', value: user?.mobile },
-      { name: 'Blocked', value: this.blockedStatus() },
-      { name: 'Active', value: this.activeStatus() },
     ];
-  }
-
-  blockedStatus(): string {
-    let bloked = this.api.getTokenUserInfo()!.blocked;
-    return bloked ? 'YES, you are BLOCKED' : 'NO, you are not BLOCKED!';
-  }
-
-  activeStatus(): string {
-    let active = this.api.getTokenUserInfo()!.active;
-    return active
-      ? 'YES, your account is ACTIVE'
-      : 'NO, your account is not ACTIVE!';
   }
 }

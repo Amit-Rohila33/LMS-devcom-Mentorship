@@ -23,23 +23,17 @@ export class ManageBooksComponent {
     this.addBookForm = fb.group({
       title: fb.control('', [Validators.required]),
       author: fb.control('', [Validators.required]),
-      category: fb.control('', [Validators.required]),
-      subcategory: fb.control('', [Validators.required]),
-      price: fb.control('', [Validators.required]),
+      genre: fb.control('', [Validators.required]),
     });
 
     this.deleteBookForm = fb.control('', [Validators.required]);
   }
-
+//Funtion to insert a book using three details, title,author and genre.
   insertBook() {
     let book = {
       id: 0,
       title: this.Title.value,
-      category: {
-        category: this.Category.value,
-        subCategory: this.Subcategory.value,
-      },
-      price: this.Price.value,
+      genre: this.Genre.value,
       available: true,
       author: this.Author.value,
     };
@@ -49,18 +43,16 @@ export class ManageBooksComponent {
         setInterval(() => (this.addMsg = ''), 5000);
         this.Title.setValue('');
         this.Author.setValue('');
-        this.Category.setValue('');
-        this.Subcategory.setValue('');
-        this.Price.setValue('');
+        this.Genre.setValue('');
       },
       error: (err: any) => console.log(err),
     });
   }
-
+//Function to delete a book using BookID
   deleteBook() {
-    let id: number = parseInt(this.deleteBookForm.value);
+    let slug : string = (this.deleteBookForm.value);
 
-    this.api.deleteBook(id).subscribe({
+    this.api.deleteBook(slug).subscribe({
       next: (res: any) => {
         if (res === 'success') {
           this.delMsg = 'Book Deleted';
@@ -79,13 +71,8 @@ export class ManageBooksComponent {
   get Author(): FormControl {
     return this.addBookForm.get('author') as FormControl;
   }
-  get Category(): FormControl {
-    return this.addBookForm.get('category') as FormControl;
-  }
-  get Subcategory(): FormControl {
-    return this.addBookForm.get('subcategory') as FormControl;
-  }
-  get Price(): FormControl {
-    return this.addBookForm.get('price') as FormControl;
+  get Genre(): FormControl {
+    return this.addBookForm.get('genre') as FormControl;
   }
 }
+

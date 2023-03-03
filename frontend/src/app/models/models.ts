@@ -1,3 +1,4 @@
+//All the models used in the project are exported from here
 export interface SideNavItem {
   title: string;
   link: string;
@@ -5,36 +6,28 @@ export interface SideNavItem {
 
 export enum UserType {
   ADMIN,
-  USER,
+  STUDENT,
 }
 
 export interface User {
   id: number;
   name: string;
   email: string;
-  mobile: string;
   password: string;
-  blocked: boolean;
-  active: boolean;
-  createdOn: string;
-  userType: UserType;
-  fine: number;
+  user_type: UserType;
 }
 
 export interface Book {
   id: number;
   title: string;
-  category: string;
-  subCategory: string;
-  price: number;
+  genre: string;
   available: boolean;
   count?: number;
   author: string;
 }
 
-export interface CategoryBooks {
-  category: string;
-  subCategory: string;
+export interface GenreBooks {
+  genre: string;
   books: Book[];
 }
 
@@ -45,10 +38,12 @@ export interface Order {
   bookid: number;
   booktitle: string;
   orderedon: string;
-  returned: boolean;
+  status: string;
 }
 
-export interface Category {
+export interface Genre {
   name: string;
-  children?: Category[];
+  id: number;
+  desc: string;
+  children?: Genre[];
 }

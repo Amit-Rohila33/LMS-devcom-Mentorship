@@ -23,6 +23,7 @@ export class RegisterComponent {
   registerForm: FormGroup;
 
   constructor(private fb: FormBuilder, private api: ApiService) {
+    //Input from user is taken using here
     this.registerForm = fb.group(
       {
         name: fb.control('', [Validators.required]),
@@ -39,19 +40,14 @@ export class RegisterComponent {
       } as AbstractControlOptions
     );
   }
-
+//Function that uses the input data to register the user
   register() {
     let user: User = {
       id: 0,
       name: this.registerForm.get('name')?.value,
       email: this.registerForm.get('email')?.value,
-      userType: UserType.USER,
-      mobile: '',
+      user_type: UserType.STUDENT,
       password: this.registerForm.get('password')?.value,
-      blocked: false,
-      active: false,
-      createdOn: '',
-      fine: 0,
     };
     this.api.createAccount(user).subscribe({
       next: (res: any) => {
@@ -64,7 +60,7 @@ export class RegisterComponent {
       },
     });
   }
-
+//To get correct appropriate format of data, the errors are defined below
   getNameErrors() {
     if (this.Name.hasError('required')) return 'Field is requied!';
     return '';
@@ -82,7 +78,7 @@ export class RegisterComponent {
       return 'Maximum 15 characters are required!';
     return '';
   }
-
+//Functions used to save the input data to FormControl
   get Name(): FormControl {
     return this.registerForm.get('name') as FormControl;
   }
@@ -97,6 +93,7 @@ export class RegisterComponent {
   }
 }
 
+// Validation function to ensure that password and repeat password match each other and then create an account
 export const repeatPasswordValidator: ValidatorFn = (
   control: AbstractControl
 ): ValidationErrors | null => {

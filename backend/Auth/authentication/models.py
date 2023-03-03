@@ -11,6 +11,7 @@ class Student(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(_("email address"), unique=True, name='email')
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
+    user_type = models.CharField(default='STUDENT', max_length=255)
     date_joined = models.DateTimeField(default=timezone.now)
     name = models.CharField(max_length = 255,blank=False, name='name')
     slug = models.SlugField(blank=True)

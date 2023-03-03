@@ -22,7 +22,7 @@ export class ReturnBookComponent {
       userId: fb.control('', [Validators.required]),
     });
   }
-
+//Function is defined for user to able to return a book
   returnBook() {
     let book = (this.bookForm.get('bookId') as FormControl).value;
     let user = (this.bookForm.get('userId') as FormControl).value;

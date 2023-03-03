@@ -1,9 +1,13 @@
 from django.db.models.signals import pre_save
 from django.dispatch import receiver
-from .models import Book, Genre, Author
+from .models import Book, Genre, Author, Order
+from authentication.models import Student
 from django.utils.text import slugify
 import random
 import string
+import datetime
+
+
 
 
 '''
@@ -46,4 +50,34 @@ def add_bool(sender, instance, *args, **kwargs):
     else:
         instance.availability = False
 
+
+
+'''
+This creates an Order whenever issued to of 
+'''
+@receiver(pre_save, sender=Book)
+def create_order(sender, instance, **kwargs):
+    try:
+        old_instance = Book.objects.get(pk = instance.pk)
+    except Book.DoesNotExist:
+        pass
+    
+    if old_instance.issued_to != instance.issued_to and instance.issued_to is not None:
+        status = "Ordered"
+        book = instance
+        order_date = datetime.datetime.now()
+        student = Student.objects.get(id= instance.issued_to.id)
+        order = Order(status=status, book=book, student=student, order_date=order_date)
+        return order.save()
+    
+    elif old_instance.issued_to != instance.issued_to and instance.issued_to is None:
+        status = "Returned"
+        return_date = datetime.datetime.now()
+        order = Order.objects.get(book = instance.id, status="Ordered")
+        order.status = status
+        order.return_date = return_date
+        return order.save()
+
+
+    
 

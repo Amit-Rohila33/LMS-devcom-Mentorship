@@ -23,6 +23,7 @@ export class LoginComponent {
     private api: ApiService,
     private router: Router
   ) {
+    //Email and password is being input using this function
     this.loginForm = fb.group({
       email: fb.control('', [Validators.required, Validators.email]),
       password: fb.control('', [
@@ -32,7 +33,7 @@ export class LoginComponent {
       ]),
     });
   }
-
+//This function ensures that the credentials added are correct
   login() {
     let login = {
       email: this.loginForm.get('email')?.value,
@@ -46,12 +47,7 @@ export class LoginComponent {
         else {
           this.responseMsg = '';
           this.api.saveToken(res.toString());
-          let isActive = this.api.getTokenUserInfo()?.active ?? false;
-          if (isActive) this.router.navigateByUrl('/books/library');
-          else {
-            this.responseMsg = 'You are not Active!';
-            this.api.deleteToken();
-          }
+          this.router.navigateByUrl('/books/library');
         }
       },
       error: (err: any) => {
@@ -60,7 +56,7 @@ export class LoginComponent {
       },
     });
   }
-
+//Functions below ensure that correct format of Email and password is entered
   getEmailErrors() {
     if (this.Email.hasError('required')) return 'Email is required!';
     if (this.Email.hasError('email')) return 'Email is invalid.';

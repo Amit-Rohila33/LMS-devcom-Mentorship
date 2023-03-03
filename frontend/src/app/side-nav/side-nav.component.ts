@@ -8,35 +8,43 @@ import { SideNavItem } from '../models/models';
 })
 export class SideNavComponent {
   sideNavContent: SideNavItem[] = [
-    {
+    {//Home Page
       title: 'home',
       link: 'home',
     },
-    {
+    {//View Books Page
       title: 'view books',
       link: 'books/library',
     },
-    {
+    {//Manage Books Page
       title: 'manage books',
       link: 'books/maintenance',
     },
-    {
+    {//View Genre Page
+      title: 'view genre',
+      link:'genre',
+    },
+    {//Manage Categories Page
       title: 'manage categories',
       link: 'books/categories',
     },
-    {
+    {//Manage Genre Page
+      title: 'manage genre',
+      link: 'manage-genre',
+    },
+    {//Return Book Page
       title: 'return book',
       link: 'books/return',
     },
-    {
+    {//View Users Page
       title: 'view users',
       link: 'users/list',
     },
-    {
+    {//All Orders Page
       title: 'all orders',
       link: 'users/all-orders',
     },
-    {
+    {//My Orders Page
       title: 'my orders',
       link: 'users/order',
     },

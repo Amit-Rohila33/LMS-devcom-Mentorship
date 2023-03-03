@@ -13,7 +13,7 @@ class StudentSerializer(serializers.ModelSerializer):
             )
     class Meta:
         model = Student
-        fields = ('email', 'name', 'slug','image')
+        fields = ('email', 'name', 'slug','image', 'user_type')
         extra_kwargs = {
             'name': {'required': True},
             'image':{'required': False, 'allow_null' :True},

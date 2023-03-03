@@ -1,3 +1,4 @@
+//This file contains all the modules that need to be imported and then the modules are exported.
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 

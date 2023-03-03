@@ -1,3 +1,4 @@
+<!-- Register Page -->
 <h1>Register</h1>
 
 <h2>{{ responseMsg }}</h2>
@@ -8,6 +9,7 @@
   gutterSize="20px"
   [formGroup]="registerForm"
 >
+  <!-- Enter Name Tab -->
   <mat-grid-tile>
     <mat-form-field appearance="fill" color="accent">
       <mat-label>Name</mat-label>
@@ -16,6 +18,7 @@
     </mat-form-field>
   </mat-grid-tile>
 
+  <!-- Enter Email Tab -->
   <mat-grid-tile>
     <mat-form-field appearance="fill" color="accent">
       <mat-label>Email</mat-label>
@@ -24,6 +27,7 @@
     </mat-form-field>
   </mat-grid-tile>
 
+  <!-- Enter Password Tab -->
   <mat-grid-tile>
     <mat-form-field appearance="fill" color="accent">
       <mat-label>Password</mat-label>
@@ -41,6 +45,7 @@
     </mat-form-field>
   </mat-grid-tile>
 
+  <!-- Enter Repeat Password Tab -->
   <mat-grid-tile>
     <mat-form-field appearance="fill" color="accent">
       <mat-label>Repeat Password</mat-label>
