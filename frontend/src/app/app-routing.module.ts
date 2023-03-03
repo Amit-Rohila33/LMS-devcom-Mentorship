@@ -2,13 +2,11 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { combineLatest } from 'rxjs';
 import { AuthorizationGuard } from './authorization.guard';
-import { GenreComponent } from './genre/genre.component';
 import { AuthenticationGuard } from './guards/authentication.guard';
 import { HomeComponent } from './home/home.component';
 import { LibraryComponent } from './library/library.component';
 import { LoginComponent } from './login/login.component';
 import { ManageBooksComponent } from './manage-books/manage-books.component';
-import { ManageCategoriesComponent } from './manage-categories/manage-categories.component';
 import { ManageGenreComponent } from './manage-genre/manage-genre.component';
 import { OrderComponent } from './order/order.component';
 import { OrdersComponent } from './orders/orders.component';
@@ -57,11 +55,6 @@ const routes: Routes = [
     // canActivate: [AuthorizationGuard],
   },
   {
-    path: 'books/categories',
-    component: ManageCategoriesComponent,
-    // canActivate: [AuthorizationGuard],
-  },
-  {
     path: 'users/profile',
     component: ProfileComponent,
     // canActivate: [AuthenticationGuard],
@@ -69,10 +62,6 @@ const routes: Routes = [
   {
     path: 'home',
     component: HomeComponent,
-  },
-  {
-    path:'genre',
-    component: GenreComponent,
   },
   {
     path:'manage-genre',

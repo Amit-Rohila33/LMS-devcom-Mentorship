@@ -13,12 +13,6 @@ export class UsersListComponent implements OnInit {
     'id',
     'name',
     'email',
-    'mobile',
-    'fine',
-    'blocked',
-    'active',
-    'created on',
-    'action',
   ];
 
   constructor(private api: ApiService) {}

@@ -18,11 +18,8 @@ import { OrdersComponent } from './orders/orders.component';
 import { ReturnBookComponent } from './return-book/return-book.component';
 import { UsersListComponent } from './users-list/users-list.component';
 import { ManageBooksComponent } from './manage-books/manage-books.component';
-import { BookCategoriesComponent } from './book-categories/book-categories.component';
-import { ManageCategoriesComponent } from './manage-categories/manage-categories.component';
 import { ProfileComponent } from './profile/profile.component';
 import { HomeComponent } from './home/home.component';
-import { GenreComponent } from './genre/genre.component';
 import { ManageGenreComponent } from './manage-genre/manage-genre.component';
 
 @NgModule({
@@ -38,11 +35,8 @@ import { ManageGenreComponent } from './manage-genre/manage-genre.component';
     ReturnBookComponent,
     UsersListComponent,
     ManageBooksComponent,
-    BookCategoriesComponent,
-    ManageCategoriesComponent,
     ProfileComponent,
     HomeComponent,
-    GenreComponent,
     ManageGenreComponent
   ],
   imports: [
