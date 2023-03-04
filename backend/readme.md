@@ -2,9 +2,10 @@
 The main objective of this project is to manage the details of the students, books and the issued books efficiently. This project helps to keep all the records of the library. So, all book category will be managed by the admin anbd author will be able to see category record
 ### Backend Overview - Auth(Project Name)
  - This contains the endpoint for User LogIn. <br>
- It has 2 apps: <br>
+  
+ **It has 2 apps**:
 #### 1). Authentication :
-This contains the student model and authentication classes and SignUp endpoint.
+ - This contains the student model and authentication classes and SignUp endpoint.
 #### 2). LMS
  - This contains and Book, Genre, Order, Author models. It also provides views for various endpoints for accessing/changing(CRUD) these models. 
 
