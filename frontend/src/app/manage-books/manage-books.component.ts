@@ -21,14 +21,17 @@ export class ManageBooksComponent {
 
   constructor(private fb: FormBuilder, private api: ApiService) {
     this.addBookForm = fb.group({
-      title: fb.control('', [Validators.required]),
-      author: fb.control('', [Validators.required]),
-      genre: fb.control('', [Validators.required]),
+      title: fb.control(''),
+      author: fb.control(''),
+      genre: fb.control(''),
+      // title: fb.control('', [Validators.required]),
+      // author: fb.control('', [Validators.required]),
+      // genre: fb.control('', [Validators.required]),
     });
-
-    this.deleteBookForm = fb.control('', [Validators.required]);
+    this.deleteBookForm = fb.control('');
+    //this.deleteBookForm = fb.control('', [Validators.required]);
   }
-//Funtion to insert a book using three details, title,author and genre.
+//Funtion to insert a book using three details, title, author and genre.
   insertBook() {
     let book = {
       id: 0,

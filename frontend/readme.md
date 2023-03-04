@@ -41,7 +41,7 @@ This project aims to make a management system for a library, in order to maintai
 
 - This page can only be accessed by an ADMIN.<br>
 - The details of all the students that are registered on the system can be found here.<br>
-- ID, Name, and Email is displayed here.<br>
+- ID, Name, Email, and the date student account was created is displayed here.<br>
 - 'URL' http://localhost:port/users/list<br>
 
 #### **7) All Orders**<br>

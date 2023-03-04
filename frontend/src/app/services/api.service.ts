@@ -27,9 +27,10 @@ export class ApiService {
       email:login.email,
       password:login.password
     };
+    console.log(params);
     let headers = new HttpHeaders();
 headers= headers.append('content-type', 'application/json');
-
+//console.log(this.http.get(this.baseUrl + 'login/', {params: params}));
 return this.http.get(this.baseUrl + 'login/', {params: params}
       )
  }
@@ -43,7 +44,7 @@ return this.http.get(this.baseUrl + 'login/', {params: params}
   }
   getToken() {
     let token = localStorage.getItem('access_token');
-    console.log(token);
+   console.log('token>>>>>>>'+token);
     return token;
   }
   deleteToken() {
@@ -52,14 +53,24 @@ return this.http.get(this.baseUrl + 'login/', {params: params}
   }
   getTokenUserInfo(): User | null {
     if (!this.isLoggedIn()) return null;
-    let token = this.jwt.decodeToken();
-    let user: User = {
-      id: token.id,
-      name: token.name,
-      email: token.email,
+    let token = this.getToken();
+    console.log(JSON.stringify(token));
+    //token = json.decodeToken(token);
+    
+    if (token == null) return null;
+    let token1 = JSON.parse(token);
+    
+  
+    console.log(token1.name);
+    
+    //let token = this.jwt.decodeToken();
+     let user: User = {
+      id: token1.id,
+      name: token1.name,
+      email: token1.email,
       password: '',
-      user_type: token.user_type === 'USER' ? UserType.STUDENT : UserType.ADMIN,
-    };
+      user_type: token1.user_type === 'USER' ? UserType.STUDENT : UserType.ADMIN,
+   };
     return user;
   }
 
@@ -128,11 +139,11 @@ return this.http.get(this.baseUrl + 'login/', {params: params}
   }
 
   insertBook(book: any) {
-    let headers = {
-      Authorization: 'Token 589b51f220fe4690d484d519ff12b1c3cd6c2762'
-    }
+    // let headers = {
+    //   Authorization: 'Token 589b51f220fe4690d484d519ff12b1c3cd6c2762'
+    // }
     return this.http.post(this.baseURL2 + 'books/', book, 
-    {headers : headers} 
+    // {headers : headers} 
     );
   }
 

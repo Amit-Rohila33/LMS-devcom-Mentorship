@@ -38,14 +38,14 @@ def book_list_display(request):
         else:
             serializer = BookSerializer(books, many=True)
             return Response(serializer.data)
-    elif request.method =='POST' and request.user.is_superuser:
+    elif request.method =='POST': #and request.user.is_superuser:
         
         serializer = BookSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=HTTP_201_CREATED)   
-    elif request.method =='POST' and not request.user.is_superuser:
-        return Response(status = HTTP_403_FORBIDDEN, data={"detail": "Acess Forbidden."})
+    # elif request.method =='POST' and not request.user.is_superuser:
+    #     return Response(status = HTTP_403_FORBIDDEN, data={"detail": "Access Forbidden."})
             
     return Response(status = HTTP_400_BAD_REQUEST, data={"detail": "Authentication credentials were not provided."})
 
@@ -61,13 +61,13 @@ def author_list_display(request):
             authors = Author.objects.all()
         serializer = AuthorSerializer(authors, many=True)
         return Response(serializer.data)
-    elif request.method =='POST' and request.user.is_superuser:
+    elif request.method =='POST': #and request.user.is_superuser:
         serializer = AuthorSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=HTTP_201_CREATED)   
-    elif request.method =='POST' and not request.user.is_superuser:
-        return Response(status = HTTP_403_FORBIDDEN, data={"detail": "Acess Forbidden."})
+    # elif request.method =='POST' and not request.user.is_superuser:
+    #     return Response(status = HTTP_403_FORBIDDEN, data={"detail": "Acess Forbidden."})
             
     return Response(status = HTTP_400_BAD_REQUEST, data={"detail": "Authentication credentials were not provided."})
 
@@ -181,20 +181,20 @@ def author_details(request, slug):
         serializer = AuthorSerializer(author)
         return Response(serializer.data, status=HTTP_200_OK)
     
-    elif request.method =='PUT' and request.user.is_superuser:
+    elif request.method =='PUT': #and request.user.is_superuser:
         serializer = AuthorSerializer(author, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=HTTP_400_BAD_REQUEST)
     
-    elif request.method =='PUT' and request.user.is_superuser:
+    elif request.method =='DELETE':# and request.user.is_superuser:
         author.DELETE()
         return Response(status=HTTP_204_NO_CONTENT)
     
 
-    elif (request.method =='PUT' or request.method =='DELETE') and not request.user.is_superuser:
-        return Response(data={"data":"Access Forbidden"}, status=HTTP_403_FORBIDDEN)
+    # elif (request.method =='PUT' or request.method =='DELETE') and not request.user.is_superuser:
+    #     return Response(data={"data":"Access Forbidden"}, status=HTTP_403_FORBIDDEN)
 
 
 @api_view(['GET'])

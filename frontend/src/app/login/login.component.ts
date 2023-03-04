@@ -46,7 +46,9 @@ export class LoginComponent {
           this.responseMsg = 'Invalid Credentials!';
         else {
           this.responseMsg = '';
-          this.api.saveToken(res.toString());
+          console.log('res>>>>'+res);
+          console.log('resString>>>>'+JSON.stringify(res));
+          this.api.saveToken(JSON.stringify(res));
           this.router.navigateByUrl('/books/library');
         }
       },
