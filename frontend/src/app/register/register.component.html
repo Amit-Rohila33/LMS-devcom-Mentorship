@@ -52,12 +52,12 @@
       <input
         matInput
         [type]="hide ? 'password' : 'text'"
-        formControlName="rpassword"
+        formControlName="password2"
       />
       <button mat-icon-button matSuffix (click)="hide = !hide">
         <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
       </button>
-      <mat-error *ngIf="this.RPassword.hasError('rpassword')">
+      <mat-error *ngIf="this.RPassword.hasError('password2')">
         Must be same as Password.
       </mat-error>
     </mat-form-field>

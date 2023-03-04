@@ -33,7 +33,7 @@ export class RegisterComponent {
           Validators.minLength(8),
           Validators.maxLength(15),
         ]),
-        rpassword: fb.control(''),
+        password2: fb.control(''),
       },
       {
         validators: [repeatPasswordValidator],
@@ -89,7 +89,7 @@ export class RegisterComponent {
     return this.registerForm.get('password') as FormControl;
   }
   get RPassword(): FormControl {
-    return this.registerForm.get('rpassword') as FormControl;
+    return this.registerForm.get('password2') as FormControl;
   }
 }
 
@@ -98,12 +98,12 @@ export const repeatPasswordValidator: ValidatorFn = (
   control: AbstractControl
 ): ValidationErrors | null => {
   const pwd = control.get('password')?.value;
-  const rpwd = control.get('rpassword')?.value;
+  const rpwd = control.get('password2')?.value;
   if (pwd === rpwd) {
-    control.get('rpassword')?.setErrors(null);
+    control.get('password2')?.setErrors(null);
     return null;
   } else {
-    control.get('rpassword')?.setErrors({ rpassword: true });
-    return { rpassword: true };
+    control.get('password2')?.setErrors({ password2: true });
+    return { password2: true };
   }
 };

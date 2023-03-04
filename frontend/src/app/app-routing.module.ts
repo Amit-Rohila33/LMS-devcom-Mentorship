@@ -19,7 +19,7 @@ const routes: Routes = [
   {
     path: 'books/library',
     component: LibraryComponent,
-    // canActivate: [AuthenticationGuard],
+    canActivate: [AuthenticationGuard],
   },
   {
     path: 'login',
@@ -32,32 +32,32 @@ const routes: Routes = [
   {
     path: 'users/order',
     component: OrderComponent,
-    // canActivate: [AuthenticationGuard],
+    canActivate: [AuthenticationGuard],
   },
   {
     path: 'users/all-orders',
     component: OrdersComponent,
-    // canActivate: [AuthorizationGuard],
+    canActivate: [AuthorizationGuard],
   },
   {
     path: 'books/return',
     component: ReturnBookComponent,
-    // canActivate: [AuthenticationGuard],
+    canActivate: [AuthenticationGuard],
   },
   {
     path: 'users/list',
     component: UsersListComponent,
-    // canActivate: [AuthorizationGuard],
+    canActivate: [AuthorizationGuard],
   },
   {
     path: 'books/maintenance',
     component: ManageBooksComponent,
-    // canActivate: [AuthorizationGuard],
+    canActivate: [AuthorizationGuard],
   },
   {
     path: 'users/profile',
     component: ProfileComponent,
-    // canActivate: [AuthenticationGuard],
+    canActivate: [AuthenticationGuard],
   },
   {
     path: 'home',
@@ -66,6 +66,7 @@ const routes: Routes = [
   {
     path:'manage-genre',
     component: ManageGenreComponent,
+    canActivate: [AuthorizationGuard],
   }
 ];
 

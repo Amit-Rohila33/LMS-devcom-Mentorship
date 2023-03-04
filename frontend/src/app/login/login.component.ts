@@ -44,6 +44,7 @@ export class LoginComponent {
       next: (res: any) => {
         if (res.toString() === 'Invalid')
           this.responseMsg = 'Invalid Credentials!';
+          
         else {
           this.responseMsg = '';
           console.log('res>>>>'+res);
