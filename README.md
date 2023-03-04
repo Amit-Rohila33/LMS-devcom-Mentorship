@@ -38,3 +38,9 @@ The main objective of this project is to manage the details of the students, boo
 (iv) Implement authentication and authorization in the frontend by creating a login form and using Angular's guards to restrict access to certain pages.<br>
 (v) Create unit tests for the frontend.<br>
 
+## Designing the Frontend:<br>
+(i) In the Angular Project, create a component of each web page of the website.<br>
+(ii) Add buttons to the side-nav to navigate to the different web pages. <br>
+(iii) Using routing modules, add routing to the buttons of side-nav.<br>
+(iv) Design all the web pages using HTML,CSS,etc. and make the website responsive.<br>
+(v) Link the APIs created from the backend to make the management system full functioning.<br>
