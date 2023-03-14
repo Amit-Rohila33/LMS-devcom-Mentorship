@@ -31,7 +31,7 @@ class BookSerializer(serializers.ModelSerializer):
     
     
 class AdminBookSerializer(serializers.ModelSerializer):
-    genre = serializers.PrimaryKeyRelatedField(queryset= Genre.objects.all(), many=True,required = False)
+    genre = serializers.PrimaryKeyRelatedField(queryset= Genre.objects.all(),required = False, allow_null=True)
     issued_to = serializers.PrimaryKeyRelatedField(queryset= Student.objects.all(), required = False, allow_null=True)
     thumb_img = serializers.ImageField(required = False, allow_null = True)
     class Meta:
