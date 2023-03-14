@@ -69,7 +69,9 @@ return this.http.get(this.baseUrl + 'login/', {params: params}
       name: token1.name,
       email: token1.email,
       password: '',
-      user_type: token1.user_type === 'USER' ? UserType.STUDENT : UserType.ADMIN,
+      password2:'',
+      user_type: token1.user_type === 'USER' ? 'STUDENT' : 'ADMIN',
+      image: null,
    };
     return user;
   }
@@ -103,7 +105,7 @@ return this.http.get(this.baseUrl + 'login/', {params: params}
       map((users) =>
         users.map((user) => {
           let temp: User = user;
-          temp.user_type = user.user_type == 0 ? UserType.STUDENT : UserType.ADMIN;
+          temp.user_type = user.user_type == '' ? 'STUDENT' : 'ADMIN';
           return temp;
         })
       )

@@ -23,7 +23,7 @@ export class AuthorizationGuard implements CanActivate {
     | boolean
     | UrlTree {
     if (this.api.isLoggedIn()) {
-      if (this.api.getTokenUserInfo()?.user_type === UserType.ADMIN) {
+      if (this.api.getTokenUserInfo()?.user_type === 'ADMIN') {
         return true;
       }
       return false;

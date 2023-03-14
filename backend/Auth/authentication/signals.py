@@ -17,5 +17,7 @@ def add_slug(sender, instance, *args, **kwargs):
         instance.slug = slug
 @receiver(pre_save, sender = Student)
 def user_type(sender, instance, *args, **kwargs):
-    if instance.user.is_superuser:
-        instance.user_type = 'ADMIN'        
+    
+    instance.user_type = 'STUDENT'     
+    if instance.id:
+        pass   

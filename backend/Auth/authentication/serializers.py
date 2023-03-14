@@ -35,7 +35,7 @@ class RegisterSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Student
-        fields = ('password', 'password2', 'email', 'name', 'image', 'slug')
+        fields = ('id','password', 'password2', 'email', 'name', 'image', 'slug', 'user_type')
         extra_kwargs = {
             'name': {'required': True},
             'image':{'required': False, 'allow_null' :True}

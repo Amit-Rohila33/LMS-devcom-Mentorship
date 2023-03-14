@@ -46,17 +46,20 @@ export class RegisterComponent {
       id: 0,
       name: this.registerForm.get('name')?.value,
       email: this.registerForm.get('email')?.value,
-      user_type: UserType.STUDENT,
+      user_type: 'STUDENT',
       password: this.registerForm.get('password')?.value,
+      password2: this.registerForm.get('password2')?.value,
+      image: null,
     };
     this.api.createAccount(user).subscribe({
       next: (res: any) => {
         console.log(res);
-        this.responseMsg = res.toString();
+        this.responseMsg = "Your account is successfully created";
       },
       error: (err: any) => {
         console.log('Error: ');
         console.log(err);
+        console.log(user);
       },
     });
   }

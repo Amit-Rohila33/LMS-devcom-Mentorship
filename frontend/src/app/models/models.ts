@@ -14,7 +14,10 @@ export interface User {
   name: string;
   email: string;
   password: string;
-  user_type: UserType;
+  password2: string;
+  user_type: string;
+  image: null;
+  // user_type: UserType;
 }
 
 export interface Book {
