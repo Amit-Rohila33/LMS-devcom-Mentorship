@@ -4,6 +4,7 @@ from LMS.models import Book, Genre, Author, Order
 from LMS.serializers import BookSerializer, GenreSerializer, AuthorSerializer, AdminBookSerializer, OrderSerializer
 from django.db.models import Q
 import datetime
+import json
 
 
     
@@ -137,7 +138,7 @@ def book_details(request, slug):
             serializer = BookSerializer(book)
             return Response(serializer.data, status=HTTP_200_OK)
     
-    elif request.method =='PUT' and request.user.is_superuser:
+    elif request.method =='PUT':
         serializer = BookSerializer(book, data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -259,47 +260,72 @@ def trending_books(request):
     
 
 
-@api_view(['GET'])
+@api_view(['PUT'])
 @permission_classes((AllowAny,))
-def orderbook(request, bookid):
+def orderbook(request, bookid, studid):
+    try:
+        book = Book.objects.get(id=bookid)
     
-    book = Book.objects.get(id=bookid)
+        # student = 
+        request.data['title'] = book.title
+        request.data['issued_to'] = studid
+        if book.genre == "None":
+            request.data['genre'] = 11
+        request.data['genre'] = book.genre.name
+        request.data['desc'] = book.desc
+        request.data['author']=book.author.name
+        serializer = AdminBookSerializer(book, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        # if book.availability:
+        #     book.issued_to = student
+        #     book.save()
+        #     serializer = AdminBookSerializer(book)
+        #     return Response(serializer.data)
     
-    student = request.user
-    data = {"book.issued_to" :student}
-    # serializer = AdminBookSerializer(book, data=data)
-    # if serializer.is_valid():
-    #    serializer.save()
-    #    return Response(serializer.data)
-    if book.availability:
-        book.issued_to = student
-        book.save()
-        serializer = AdminBookSerializer(book)
-        return Response(serializer.data)
     
-    data = {"detail": "This book is not available."}
-    return Response(data=data, status=HTTP_400_BAD_REQUEST)
+    except Book.DoesNotExist: 
+        data = {"detail": "This book is not available."}  
+        return Response(data=data, status=HTTP_404_NOT_FOUND)
+    return Response(data = request.data, status=HTTP_400_BAD_REQUEST)
 
 @api_view(['GET'])
 @permission_classes((AllowAny,))
-def returnbook(request, bookid):
-    book = Book.objects.get(id=bookid)
-    student = request.user
-    if book.issued_to == student.id:
-        book.issued_to = None
-        book.save()
-        status = "Returned"
-        return_date = datetime.datetime.now()
-        order = Order.objects.get(book = bookid, status="Ordered")
-        order.status = status
-        order.return_date = return_date
-        order.save()
-        return Response(status=HTTP_200_OK)
+def returnbook(request, bookid, studid):
+    try:
+        book = Book.objects.get(id=bookid)
+    except Book.DoesNotExist:
+        return Response(status=HTTP_404_NOT_FOUND)
+    if book.issued_to.id == int(studid):
+        # student = 
+        request.data['title'] = book.title
+        request.data['issued_to'] = None
+        if book.genre == "None":
+            request.data['genre'] = 11
+        request.data['genre'] = book.genre.id
+        request.data['desc'] = book.desc
+        request.data['author']=book.author.id
+
+        #request.data = json.dumps(request.data)
+        serializer = AdminBookSerializer(book, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=HTTP_200_OK)
+
+        
+        # request.data['status'] = "Returned"
+        # request.data['return_date'] = datetime.datetime.now()
+        # request.data['order_date']
+        # order = Order.objects.get(book = bookid, status="Ordered")
+        # order.status = status
+        # order.return_date = return_date
+        # order.save()
+        return Response(data=request.data,status=HTTP_400_BAD_REQUEST)
     
     else:
-        data = {'detail':book}
-        return Response(data=data, status=HTTP_400_BAD_REQUEST)
-
+        # data = {'detail':book}
+        return Response(data ={'data':AdminBookSerializer(book).data, 'datas':int(studid)}, status=HTTP_400_BAD_REQUEST)
 
 
 

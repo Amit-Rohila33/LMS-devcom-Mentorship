@@ -12,8 +12,8 @@ urlpatterns = [
    path('issued-books/', views.issued_book_list_display),
    path('orders/', views.orders_list),
    path('trending-books/', views.trending_books),
-   path('order_book/<str:bookid>/', views.orderbook),
-   path('ReturnBook/<str:bookid>/', views.returnbook),
+   path('order_book/<str:bookid>/<str:studid>/', views.orderbook),
+   path('ReturnBook/<str:bookid>/<str:studid>/', views.returnbook),
    path('DeleteBook/<slug:slug>', views.deletebook)
 
 ]
