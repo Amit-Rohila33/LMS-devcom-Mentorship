@@ -39,15 +39,25 @@ def book_list_display(request):
             serializer = BookSerializer(books, many=True)
             return Response(serializer.data)
     elif request.method == 'POST': 
-        if request.user.is_superuser:
-            serializer = BookSerializer(data=request.data)
-            if serializer.is_valid():
-                serializer.save()
-                return Response(serializer.data, status=HTTP_201_CREATED)
-            if not serializer.is_valid:
-                data = {"detal":"Somethings is fucked up here."}
-                return Response(data=data)
-        return Response(status=HTTP_400_BAD_REQUEST)
+        author = request.data['author']
+        genre = request.data['genre']
+        try:
+            author_id = Author.objects.get(name=author).id
+            genre_id = Genre.objects.get(name=genre).id
+            request.data['author'] =author_id
+            request.data['genre'] = genre_id
+            if request.user.is_superuser:
+                serializer = BookSerializer(data=request.data)
+
+                if serializer.is_valid():
+                    serializer.save()
+                    return Response(serializer.data, status=HTTP_201_CREATED)
+                if not serializer.is_valid:
+                    data = {"detal":"Somethings is messed up here."}
+                    return Response(data=data)
+        except Author.DoesNotExist or Genre.DoesNotExist:
+            return Response(data = {},status=HTTP_400_BAD_REQUEST)
+        # return Response(status=HTTP_400_BAD_REQUEST)
            
     # elif request.method =='POST' and not request.user.is_superuser:
     #     return Response(status = HTTP_403_FORBIDDEN, data={"detail": "Access Forbidden."})
