@@ -27,6 +27,8 @@ export interface Book {
   available: boolean;
   count?: number;
   author: string;
+  desc: string;
+  slug: string;
 }
 
 export interface GenreBooks {

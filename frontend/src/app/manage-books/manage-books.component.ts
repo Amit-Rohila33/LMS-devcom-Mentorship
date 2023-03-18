@@ -24,6 +24,7 @@ export class ManageBooksComponent {
       title: fb.control(''),
       author: fb.control(''),
       genre: fb.control(''),
+      desc: fb.control(''),
       // title: fb.control('', [Validators.required]),
       // author: fb.control('', [Validators.required]),
       // genre: fb.control('', [Validators.required]),
@@ -39,6 +40,7 @@ export class ManageBooksComponent {
       genre: this.Genre.value,
       available: true,
       author: this.Author.value,
+      desc: this.Desc.value,
     };
     this.api.insertBook(book).subscribe({
       next: (res: any) => {
@@ -47,6 +49,7 @@ export class ManageBooksComponent {
         this.Title.setValue('');
         this.Author.setValue('');
         this.Genre.setValue('');
+        this.Desc.setValue('');
       },
       error: (err: any) => console.log(err),
     });
@@ -76,6 +79,9 @@ export class ManageBooksComponent {
   }
   get Genre(): FormControl {
     return this.addBookForm.get('genre') as FormControl;
+  }
+  get Desc(): FormControl{
+    return this.addBookForm.get('desc') as FormControl;
   }
 }
 

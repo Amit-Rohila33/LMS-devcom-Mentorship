@@ -41,20 +41,23 @@ def book_list_display(request):
     elif request.method == 'POST': 
         author = request.data['author']
         genre = request.data['genre']
+        # #request.data['desc'] = "Hello "
         try:
             author_id = Author.objects.get(name=author).id
             genre_id = Genre.objects.get(name=genre).id
             request.data['author'] =author_id
             request.data['genre'] = genre_id
-            if request.user.is_superuser:
-                serializer = BookSerializer(data=request.data)
+            if request.data['available']:
+                request.data.pop('available')
+            # if not request.user.is_superuser :
+            serializer = BookSerializer(data=request.data)
 
-                if serializer.is_valid():
-                    serializer.save()
-                    return Response(serializer.data, status=HTTP_201_CREATED)
-                if not serializer.is_valid:
-                    data = {"detal":"Somethings is messed up here."}
-                    return Response(data=data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data, status=HTTP_201_CREATED)
+            if not serializer.is_valid:
+                data = {"detal":"Somethings is messed up here."}
+                return Response(data=data)    
         except Author.DoesNotExist or Genre.DoesNotExist:
             return Response(data = {},status=HTTP_400_BAD_REQUEST)
         # return Response(status=HTTP_400_BAD_REQUEST)
@@ -117,7 +120,7 @@ It gives  PUT, DELETE option if the logged in user is superuser.
 '''
 
 
-@api_view(['GET', 'PUT','DELETE'])
+@api_view(['GET', 'PUT'])
 @permission_classes((AllowAny,))
 def book_details(request, slug):
     try:
@@ -141,15 +144,25 @@ def book_details(request, slug):
             return Response(serializer.data)
         return Response(serializer.errors, status=HTTP_400_BAD_REQUEST)
     
-    elif request.method =='PUT' and request.user.is_superuser:
-        book.DELETE()
-        return Response(status=HTTP_204_NO_CONTENT)
+    # elif request.method =='DELETE': #and request.user.is_superuser:
+    #     book.delete()
+    #     return Response(status=HTTP_204_NO_CONTENT)
     
 
-    elif (request.method =='PUT' or request.method =='DELETE') and not request.user.is_superuser:
-        return Response(data={"data":"Access Forbidden"}, status=HTTP_403_FORBIDDEN)
+    # elif (request.method =='PUT' or request.method =='DELETE') and not request.user.is_superuser:
+    return Response(data={"data":"Access Forbidden"}, status=HTTP_403_FORBIDDEN)
     
 
+@api_view(['DELETE'])
+@permission_classes((AllowAny,))
+def deletebook(request, slug):
+    try:
+        book = Book.objects.get(slug=slug)
+        book.delete()
+        return Response(status= HTTP_204_NO_CONTENT)
+    except Book.DoesNotExist:
+        return Response(status= HTTP_404_NOT_FOUND)
+    
 
 #getting Genre by Slug
 @api_view(['GET', 'PUT','DELETE'])

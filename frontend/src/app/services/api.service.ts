@@ -44,7 +44,7 @@ return this.http.get(this.baseUrl + 'login/', {params: params}
   }
   getToken() {
     let token = localStorage.getItem('access_token');
-   console.log('token>>>>>>>'+token);
+   //console.log('token>>>>>>>'+token);
     return token;
   }
   deleteToken() {
@@ -54,14 +54,14 @@ return this.http.get(this.baseUrl + 'login/', {params: params}
   getTokenUserInfo(): User | null {
     if (!this.isLoggedIn()) return null;
     let token = this.getToken();
-    console.log(JSON.stringify(token));
+    //console.log(JSON.stringify(token));
     //token = json.decodeToken(token);
     
     if (token == null) return null;
     let token1 = JSON.parse(token);
     
   
-    console.log(token1.name);
+    //console.log(token1.name);
     
     //let token = this.jwt.decodeToken();
      let user: User = {
@@ -112,45 +112,50 @@ return this.http.get(this.baseUrl + 'login/', {params: params}
     );
   }
 
-  blockUser(id: number) {
-    return this.http.get(this.baseUrl + 'ChangeBlockStatus/1/' + id, {
-      responseType: 'text',
-    });
-  }
+  // blockUser(id: number) {
+  //   return this.http.get(this.baseUrl + 'ChangeBlockStatus/1/' + id, {
+  //     responseType: 'text',
+  //   });
+  // }
 
-  unblockUser(id: number) {
-    return this.http.get(this.baseUrl + 'ChangeBlockStatus/0/' + id, {
-      responseType: 'text',
-    });
-  }
+  // unblockUser(id: number) {
+  //   return this.http.get(this.baseUrl + 'ChangeBlockStatus/0/' + id, {
+  //     responseType: 'text',
+  //   });
+  // }
 
-  enableUser(id: number) {
-    return this.http.get(this.baseUrl + 'ChangeEnableStatus/1/' + id, {
-      responseType: 'text',
-    });
-  }
+  // enableUser(id: number) {
+  //   return this.http.get(this.baseUrl + 'ChangeEnableStatus/1/' + id, {
+  //     responseType: 'text',
+  //   });
+  // }
 
-  disableUser(id: number) {
-    return this.http.get(this.baseUrl + 'ChangeEnableStatus/0/' + id, {
-      responseType: 'text',
-    });
-  }
+  // disableUser(id: number) {
+  //   return this.http.get(this.baseUrl + 'ChangeEnableStatus/0/' + id, {
+  //     responseType: 'text',
+  //   });
+  // }
 
   getGenre() {
     return this.http.get<Genre[]>(this.baseURL2 + 'genres/');
   }
 
   insertBook(book: any) {
-    // let headers = {
-    //   Authorization: 'Token 589b51f220fe4690d484d519ff12b1c3cd6c2762'
-    // }
-    return this.http.post(this.baseURL2 + 'books/', book, 
-    // {headers : headers} 
+    var headers = {
+      headers: new HttpHeaders()
+      .set('Authorization', 'Token 42bb71c851dda63976b993ffb2bd237135cfba56')
+    }
+    //  let headers = {
+    //    Authorization: 'Token 42bb71c851dda63976b993ffb2bd237135cfba56'
+    //  }
+    return this.http.post(this.baseURL2 + 'books/', book, headers
+    //{headers : headers} 
+     
     );
   }
 
   deleteBook(slug : string) {
-    return this.http.delete(this.baseURL2 + 'books/' + slug, {
+    return this.http.delete(this.baseURL2 + 'DeleteBook/' + slug, {
       responseType: 'text',
     });
   }

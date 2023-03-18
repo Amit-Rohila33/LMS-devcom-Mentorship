@@ -14,5 +14,6 @@ urlpatterns = [
    path('trending-books/', views.trending_books),
    path('order_book/<str:bookid>/', views.orderbook),
    path('ReturnBook/<str:bookid>/', views.returnbook),
+   path('DeleteBook/<slug:slug>', views.deletebook)
 
 ]

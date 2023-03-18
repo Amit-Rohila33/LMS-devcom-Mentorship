@@ -27,6 +27,13 @@
         <mat-error *ngIf="this.Author.invalid">Required</mat-error>
       </mat-form-field>
 
+      <!-- Book Description Column -->
+      <mat-form-field appearance="fill" color="accent">
+        <mat-label>Description</mat-label>
+        <input matInput formControlName="desc" />
+        <mat-error *ngIf="this.Desc.invalid">Required</mat-error>
+      </mat-form-field>
+
       <button
         mat-flat-button
         color="accent"
