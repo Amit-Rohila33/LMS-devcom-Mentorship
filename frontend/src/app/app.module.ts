@@ -21,6 +21,7 @@ import { ManageBooksComponent } from './manage-books/manage-books.component';
 import { ProfileComponent } from './profile/profile.component';
 import { HomeComponent } from './home/home.component';
 import { ManageGenreComponent } from './manage-genre/manage-genre.component';
+import { ManageAuthorComponent } from './manage-author/manage-author.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { ManageGenreComponent } from './manage-genre/manage-genre.component';
     ManageBooksComponent,
     ProfileComponent,
     HomeComponent,
-    ManageGenreComponent
+    ManageGenreComponent,
+    ManageAuthorComponent
   ],
   imports: [
     BrowserModule,

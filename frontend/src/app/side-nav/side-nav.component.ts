@@ -24,6 +24,11 @@ export class SideNavComponent {
       title: 'manage genre',
       link: 'manage-genre',
     },
+    {//Manage Author Page
+      title: 'manage author',
+      link: 'manage-author',
+
+    },
     {//Return Book Page
       title: 'return book',
       link: 'books/return',

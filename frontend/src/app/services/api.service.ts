@@ -95,7 +95,7 @@ return this.http.get(this.baseUrl + 'login/', {params: params}
   }
 
   returnBook(bookId: string, userId: string) {
-    return this.http.get(this.baseUrl + 'ReturnBook/' + bookId + '/' + userId, {
+    return this.http.get(this.baseURL2 + 'ReturnBook/' + bookId + '/' + userId + '/', {
       responseType: 'text',
     });
   }
@@ -167,6 +167,13 @@ return this.http.get(this.baseUrl + 'login/', {params: params}
       // {desc: desc},
       { responseType: 'text' }
     );
+  }
+  insertAuthor(name:string, desc: string) {
+    return this.http.post(
+      this.baseURL2 + 'authors/',
+      { name : name, desc: desc},
+      {responseType : 'text'}
+    )
   }
   insertCategory(category: string,) {
     return this.http.post(

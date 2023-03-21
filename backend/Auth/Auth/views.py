@@ -56,16 +56,17 @@ def login(request):
  Admin can access student data for all the students and Student can GET, PUT, DELETE his/her data.
 '''
 @api_view(['GET'])
+@permission_classes((AllowAny,))
 def user_based_access(request):
-    if request.user.is_superuser:
-        student = Student.objects.all()
-        serializer = StudentSerializer(student, many=True)
-        return JsonResponse(serializer.data, safe=False)
-    elif not request.user.is_superuser:
-        email = request.user.email
-        student = Student.objects.get(email= email)
-        serializer = StudentSerializer(student)
-        return JsonResponse(serializer.data, safe=False)
+    # if request.user.is_superuser:
+    student = Student.objects.all()
+    serializer = StudentSerializer(student, many=True)
+    return JsonResponse(serializer.data, safe=False)
+    # elif not request.user.is_superuser:
+    #     email = request.user.email
+    #     student = Student.objects.get(email= email)
+    #     serializer = StudentSerializer(student)
+    #     return JsonResponse(serializer.data, safe=False)
 
 '''This view gives details for some student , permission_class = DEFAULT_PERMISSION_CLASSES
 Admin can access Student data and DELETE the Student.

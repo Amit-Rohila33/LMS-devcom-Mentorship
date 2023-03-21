@@ -89,7 +89,12 @@ def author_list_display(request):
     if request.method == 'GET':
         query = request.GET.get('q')
         if query:
-            authors = Author.objects.filter(Q(name__icontains = query) | Q(desc__icontains = query))
+            authors = Author.objects.filter(Q(name__icontains = query))
+            num = len(authors)
+            if num != 0:
+                return Response(True, status = HTTP_200_OK)
+            return Response(False, status = HTTP_204_NO_CONTENT)
+
         else:
             authors = Author.objects.all()
         serializer = AuthorSerializer(authors, many=True)
@@ -174,9 +179,9 @@ def book_details(request, slug):
 
 @api_view(['DELETE'])
 @permission_classes((AllowAny,))
-def deletebook(request, slug):
+def deletebook(request, bid):
     try:
-        book = Book.objects.get(slug=slug)
+        book = Book.objects.get(id = bid)
         book.delete()
         return Response(status= HTTP_204_NO_CONTENT)
     except Book.DoesNotExist:
@@ -245,8 +250,9 @@ def author_details(request, slug):
 
 
 @api_view(['GET'])
+@permission_classes((AllowAny,))
 def issued_book_list_display(request):
-    if request.method == 'GET' and request.user.is_superuser:
+    if request.method == 'GET':
         books = Book.objects.filter(availability=False)
         serializer = AdminBookSerializer(books, many=True)
         return Response(serializer.data)
@@ -315,40 +321,46 @@ def returnbook(request, bookid, studid):
         book = Book.objects.get(id=bookid)
     except Book.DoesNotExist:
         return Response(status=HTTP_404_NOT_FOUND)
-    if book.issued_to.id == int(studid):
-        # student = 
-        request.data['title'] = book.title
-        request.data['issued_to'] = None
-        if book.genre == "None":
-            request.data['genre'] = 11
-        request.data['genre'] = book.genre.id
-        request.data['desc'] = book.desc
-        request.data['author']=book.author.id
+    if book.issued_to != None:
+        if book.issued_to.id == int(studid):
+            # student = 
+            request.data['title'] = book.title
+            request.data['issued_to'] = None
+            if book.genre == "None":
+                request.data['genre'] = 11
+            request.data['genre'] = book.genre.id
+            request.data['desc'] = book.desc
+            request.data['author']=book.author.id
 
-        #request.data = json.dumps(request.data)
-        serializer = AdminBookSerializer(book, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=HTTP_200_OK)
+            #request.data = json.dumps(request.data)
+            serializer = AdminBookSerializer(book, data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data, status=HTTP_200_OK)
 
-        
-        # request.data['status'] = "Returned"
-        # request.data['return_date'] = datetime.datetime.now()
-        # request.data['order_date']
-        # order = Order.objects.get(book = bookid, status="Ordered")
-        # order.status = status
-        # order.return_date = return_date
-        # order.save()
-        return Response(data=request.data,status=HTTP_400_BAD_REQUEST)
+            
+            # request.data['status'] = "Returned"
+            # request.data['return_date'] = datetime.datetime.now()
+            # request.data['order_date']
+            # order = Order.objects.get(book = bookid, status="Ordered")
+            # order.status = status
+            # order.return_date = return_date
+            # order.save()
+            return Response(data=request.data,status=HTTP_400_BAD_REQUEST)
     
     else:
         # data = {'detail':book}
         return Response(data ={'data':AdminBookSerializer(book).data, 'datas':int(studid)}, status=HTTP_400_BAD_REQUEST)
 
+    
 
 
-    
-    
+@api_view(['GET'])
+@permission_classes((AllowAny,))
+def order_by_student(request, userid):
+    orders = Order.objects.filter(student = userid)
+    serializer = OrderSerializer(orders, many=True)
+    return Response(serializer.data, status = HTTP_200_OK)
     
   
     

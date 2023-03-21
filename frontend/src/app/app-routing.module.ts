@@ -6,6 +6,7 @@ import { AuthenticationGuard } from './guards/authentication.guard';
 import { HomeComponent } from './home/home.component';
 import { LibraryComponent } from './library/library.component';
 import { LoginComponent } from './login/login.component';
+import { ManageAuthorComponent } from './manage-author/manage-author.component';
 import { ManageBooksComponent } from './manage-books/manage-books.component';
 import { ManageGenreComponent } from './manage-genre/manage-genre.component';
 import { OrderComponent } from './order/order.component';
@@ -66,6 +67,11 @@ const routes: Routes = [
   {
     path:'manage-genre',
     component: ManageGenreComponent,
+    canActivate: [AuthorizationGuard],
+  },
+  {
+    path:'manage-author',
+    component: ManageAuthorComponent,
     canActivate: [AuthorizationGuard],
   }
 ];

@@ -13,7 +13,8 @@ urlpatterns = [
    path('orders/', views.orders_list),
    path('trending-books/', views.trending_books),
    path('order_book/<str:bookid>/<str:studid>/', views.orderbook),
-   path('ReturnBook/<str:bookid>/<str:studid>/', views.returnbook),
-   path('DeleteBook/<slug:slug>', views.deletebook)
+   path('ReturnBook/<int:bookid>/<int:studid>/', views.returnbook),
+   path('DeleteBook/<int:bid>', views.deletebook),
+   path('orders/<int:userid>', views.order_by_student)
 
 ]

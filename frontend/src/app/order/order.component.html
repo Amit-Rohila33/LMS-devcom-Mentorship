@@ -11,7 +11,7 @@
   <!-- Name -->
   <ng-container matColumnDef="name">
     <th mat-header-cell *matHeaderCellDef>Users Name</th>
-    <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+    <td mat-cell *matCellDef="let element">{{ element.student }}</td>
   </ng-container>
 
   <!-- Book Id -->
@@ -23,14 +23,14 @@
   <!-- Book -->
   <ng-container matColumnDef="book">
     <th mat-header-cell *matHeaderCellDef>Book Name</th>
-    <td mat-cell *matCellDef="let element">{{ element.bookName }}</td>
+    <td mat-cell *matCellDef="let element">{{ element.book }}</td>
   </ng-container>
 
   <!-- Date -->
   <ng-container matColumnDef="date">
     <th mat-header-cell *matHeaderCellDef>Order Date</th>
     <td mat-cell *matCellDef="let element">
-      {{ element.orderDate | date : "dd-MMM-YYYY" }}
+      {{ element.order_date | date : "dd-MMM-YYYY" }}
     </td>
   </ng-container>
 
