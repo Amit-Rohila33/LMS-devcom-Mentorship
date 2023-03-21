@@ -89,11 +89,12 @@ def book_list_display(request):
 def author_list_display(request):
     if request.method == 'GET':
         query = request.GET.get('q')
-        qur = query.title()
+        
         if query:
+            qur = query.title()
             authors = Author.objects.filter(name = qur)
             num = len(authors)
-            if num != 0:
+            if num > 0:
                 return Response(True, status = HTTP_200_OK)
             return Response(False, status = HTTP_204_NO_CONTENT)
 
@@ -102,6 +103,10 @@ def author_list_display(request):
         serializer = AuthorSerializer(authors, many=True)
         return Response(serializer.data)
     elif request.method =='POST': #and request.user.is_superuser:
+        try:
+            request.data['name'] = request.data['name'].title()
+        except KeyError:
+            return Response(status = HTTP_400_BAD_REQUEST, data={"detail": "Data format is not provided."})
         serializer = AuthorSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -109,7 +114,7 @@ def author_list_display(request):
     # elif request.method =='POST' and not request.user.is_superuser:
     #     return Response(status = HTTP_403_FORBIDDEN, data={"detail": "Acess Forbidden."})
             
-    return Response(status = HTTP_400_BAD_REQUEST, data={"detail": "Authentication credentials were not provided."})
+    return Response(status = HTTP_400_BAD_REQUEST, data={"detail": ""})
 
 
 @api_view(['GET', 'POST'])

@@ -46,7 +46,10 @@ export class ManageBooksComponent {
     };
     this.api.checkIfGenreExists(this.Genre.value).subscribe(
       (genreExists: boolean) =>{
-        if (genreExists){
+        if (genreExists ){
+          this.api.checkIfAuthorExists(this.Author.value).subscribe(
+            (authorExists: boolean) =>{
+              if (authorExists) {
     this.api.insertBook(book).subscribe({
       next: (res: any) => {
         this.addMsg = 'Book Inserted';
@@ -57,8 +60,15 @@ export class ManageBooksComponent {
         this.Desc.setValue('');
       },
       error: (err: any) => console.log(err),
-    });
+      
+    })
   }
+  else{
+    console.error("Author doesn't exist ");
+    this.router.navigateByUrl('/manage-author');
+  }
+  });
+}
   else {
     console.error("Genre doesn't exist");
     this.router.navigateByUrl('/manage-genre');

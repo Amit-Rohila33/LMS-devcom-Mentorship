@@ -43,7 +43,7 @@ const routes: Routes = [
   {
     path: 'books/return',
     component: ReturnBookComponent,
-    canActivate: [AuthenticationGuard],
+    canActivate: [AuthorizationGuard],
   },
   {
     path: 'users/list',

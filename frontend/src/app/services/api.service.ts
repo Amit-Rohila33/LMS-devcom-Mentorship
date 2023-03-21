@@ -185,4 +185,7 @@ return this.http.get(this.baseUrl + 'login/', {params: params}
   checkIfGenreExists(genre:string){
     return this.http.get<boolean>(this.baseURL2 + 'genres/?q='+genre);
   }
+  checkIfAuthorExists(name: string){
+    return this.http.get<boolean>(this.baseURL2 + 'authors/?q=' + name);
+  }
 }
