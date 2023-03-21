@@ -81,7 +81,7 @@ return this.http.get(this.baseUrl + 'login/', {params: params}
   }
 
   orderBook(userId: number, bookId: number) {
-    return this.http.get(this.baseURL2 + 'order_book/' + userId + '/' + bookId, {
+    return this.http.get(this.baseURL2 + 'order_book/' + bookId + '/' + userId + '/', {
       responseType: 'text',
     });
   }

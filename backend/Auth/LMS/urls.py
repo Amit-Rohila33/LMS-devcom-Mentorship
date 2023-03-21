@@ -12,7 +12,7 @@ urlpatterns = [
    path('issued-books/', views.issued_book_list_display),
    path('orders/', views.orders_list),
    path('trending-books/', views.trending_books),
-   path('order_book/<str:bookid>/<str:studid>/', views.orderbook),
+   path('order_book/<int:bookid>/<int:studid>/', views.orderbook),
    path('ReturnBook/<int:bookid>/<int:studid>/', views.returnbook),
    path('DeleteBook/<int:bid>', views.deletebook),
    path('orders/<int:userid>', views.order_by_student)

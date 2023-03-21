@@ -5,6 +5,7 @@ from LMS.serializers import BookSerializer, GenreSerializer, AuthorSerializer, A
 from django.db.models import Q
 import datetime
 import json
+from authentication.models import Student
 
 
     
@@ -284,7 +285,7 @@ def trending_books(request):
     
 
 
-@api_view(['PUT'])
+@api_view(['GET'])
 @permission_classes((AllowAny,))
 def orderbook(request, bookid, studid):
     try:
@@ -293,11 +294,15 @@ def orderbook(request, bookid, studid):
         # student = 
         request.data['title'] = book.title
         request.data['issued_to'] = studid
+        # try:
+        # student = Student.objects.get(id=studid)
+        # except Student.DoesNotExist:
+        #     return Response(status = HTTP_400_BAD_REQUEST)
         if book.genre == "None":
             request.data['genre'] = 11
-        request.data['genre'] = book.genre.name
+        request.data['genre'] = book.genre.id
         request.data['desc'] = book.desc
-        request.data['author']=book.author.name
+        request.data['author']=book.author.id
         serializer = AdminBookSerializer(book, data=request.data)
         if serializer.is_valid():
             serializer.save()
