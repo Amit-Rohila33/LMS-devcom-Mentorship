@@ -81,7 +81,7 @@ return this.http.get(this.baseUrl + 'login/', {params: params}
   }
 
   orderBook(userId: number, bookId: number) {
-    return this.http.get(this.baseUrl + 'OrderBook/' + userId + '/' + bookId, {
+    return this.http.get(this.baseURL2 + 'order_book/' + userId + '/' + bookId, {
       responseType: 'text',
     });
   }
@@ -160,10 +160,11 @@ return this.http.get(this.baseUrl + 'login/', {params: params}
     });
   }
 
-  insertGenre(genre: string,) {
+  insertGenre(name: string, desc: string) {
     return this.http.post(
       this.baseURL2 + 'genres/',
-      { genre : genre},
+      { name : name, desc: desc},
+      // {desc: desc},
       { responseType: 'text' }
     );
   }
@@ -173,5 +174,8 @@ return this.http.get(this.baseUrl + 'login/', {params: params}
       { category : category},
       { responseType: 'text' }
     );
+  }
+  checkIfGenreExists(genre:string){
+    return this.http.get<boolean>(this.baseURL2 + 'genres/?q='+genre);
   }
 }

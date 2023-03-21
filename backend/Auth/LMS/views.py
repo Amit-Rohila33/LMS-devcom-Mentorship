@@ -59,7 +59,21 @@ def book_list_display(request):
             if not serializer.is_valid:
                 data = {"detal":"Somethings is messed up here."}
                 return Response(data=data)    
-        except Author.DoesNotExist or Genre.DoesNotExist:
+        except Author.DoesNotExist:
+            author_name = author
+            desc = ""
+            request.data['name'] = author_name
+            request.data['desc'] = desc
+            request.data.pop('genre')
+            request.data.pop('name')
+            data = {"title" : author_name, "desc" :desc}
+            serialized = AuthorSerializer(data=request.data)
+            if serialized.is_valid():
+                serialized.save()
+                return Response(status = HTTP_201_CREATED)
+            return Response(status = HTTP_400_BAD_REQUEST)
+
+        except Genre.DoesNotExist:
             return Response(data = {},status=HTTP_400_BAD_REQUEST)
         # return Response(status=HTTP_400_BAD_REQUEST)
            
@@ -97,18 +111,22 @@ def genre_list_display(request):
     if request.method == 'GET':
         query = request.GET.get('q')
         if query:
-            genre = Genre.objects.filter(Q(name__icontains = query) | Q(desc__icontains = query))
+            genre = Genre.objects.filter(Q(name__icontains = query))
+            number = len(genre)
+            if number!=0:
+                return Response(True, status = HTTP_200_OK)
+            else:
+                return Response(False, status = HTTP_204_NO_CONTENT)
         else:
             genre = Genre.objects.all()
-        serializer = GenreSerializer(genre, many=True)
-        return Response(serializer.data)
-    elif request.method =='POST' and request.user.is_superuser:
+            serializer = GenreSerializer(genre, many=True)
+            return Response(serializer.data)
+    elif request.method =='POST' :
         serializer = GenreSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=HTTP_201_CREATED)   
-    elif request.method =='POST' and not request.user.is_superuser:
-        return Response(status = HTTP_403_FORBIDDEN, data={"detail": "Acess Forbidden."})
+   
             
     return Response(status = HTTP_400_BAD_REQUEST, data={"detail": "Authentication credentials were not provided."})
 

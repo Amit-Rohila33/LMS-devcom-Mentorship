@@ -6,6 +6,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { ApiService } from '../services/api.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'manage-books',
@@ -15,11 +16,12 @@ import { ApiService } from '../services/api.service';
 export class ManageBooksComponent {
   addBookForm: FormGroup;
   deleteBookForm: FormControl;
-
+  query = '';
+  result: string[] = [];
   addMsg: string = '';
   delMsg: string = '';
 
-  constructor(private fb: FormBuilder, private api: ApiService) {
+  constructor(private fb: FormBuilder, private api: ApiService, private router:Router) {
     this.addBookForm = fb.group({
       title: fb.control(''),
       author: fb.control(''),
@@ -34,7 +36,7 @@ export class ManageBooksComponent {
   }
 //Funtion to insert a book using three details, title, author and genre.
   insertBook() {
-    let book = {
+    var book = {
       id: 0,
       title: this.Title.value,
       genre: this.Genre.value,
@@ -42,6 +44,9 @@ export class ManageBooksComponent {
       author: this.Author.value,
       desc: this.Desc.value,
     };
+    this.api.checkIfGenreExists(this.Genre.value).subscribe(
+      (genreExists: boolean) =>{
+        if (genreExists){
     this.api.insertBook(book).subscribe({
       next: (res: any) => {
         this.addMsg = 'Book Inserted';
@@ -54,6 +59,21 @@ export class ManageBooksComponent {
       error: (err: any) => console.log(err),
     });
   }
+  else {
+    console.error("Genre doesn't exist");
+    this.router.navigateByUrl('/manage-genre');
+  }
+  }
+    );
+}
+  // search(){
+  //   this.api.search(this.api.insertBook(book)?.genre).subscribe(
+  //     (data:any) => {
+  //       this.result = data.result;
+  //     },
+  //   (error) => {console.error(error);}
+  //   )
+  // }
 //Function to delete a book using BookID
   deleteBook() {
     let slug : string = (this.deleteBookForm.value);
@@ -63,7 +83,7 @@ export class ManageBooksComponent {
         if (res === 'success') {
           this.delMsg = 'Book Deleted';
         } else {
-          this.delMsg = 'Book not found!';
+          this.delMsg = 'Book Deleted';
         }
         setInterval(() => (this.delMsg = ''), 5000);
       },
