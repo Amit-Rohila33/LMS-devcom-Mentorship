@@ -50,7 +50,7 @@ export class LoginComponent {
           console.log('res>>>>'+res);
           console.log('resString>>>>'+JSON.stringify(res));
           this.api.saveToken(JSON.stringify(res));
-          this.router.navigateByUrl('/books/library');
+          this.router.navigateByUrl('/home');
         }
       },
       error: (err: any) => {

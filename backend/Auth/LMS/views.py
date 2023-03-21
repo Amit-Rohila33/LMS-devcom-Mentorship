@@ -45,8 +45,8 @@ def book_list_display(request):
         genre = request.data['genre']
         # #request.data['desc'] = "Hello "
         try:
-            author_id = Author.objects.get(name=author).id
-            genre_id = Genre.objects.get(name=genre).id
+            author_id = Author.objects.get(name=author.title()).id
+            genre_id = Genre.objects.get(name=genre.title()).id
             request.data['author'] =author_id
             request.data['genre'] = genre_id
             if request.data['available']:
@@ -89,8 +89,9 @@ def book_list_display(request):
 def author_list_display(request):
     if request.method == 'GET':
         query = request.GET.get('q')
+        qur = query.title()
         if query:
-            authors = Author.objects.filter(Q(name__icontains = query))
+            authors = Author.objects.filter(name = qur)
             num = len(authors)
             if num != 0:
                 return Response(True, status = HTTP_200_OK)
@@ -116,8 +117,9 @@ def author_list_display(request):
 def genre_list_display(request):
     if request.method == 'GET':
         query = request.GET.get('q')
+        qur = query.title()
         if query:
-            genre = Genre.objects.filter(Q(name__icontains = query))
+            genre = Genre.objects.filter(name = qur)
             number = len(genre)
             if number!=0:
                 return Response(True, status = HTTP_200_OK)
